@@ -5,6 +5,7 @@ import 'package:diagnostic_app/core/router/router.gr.dart';
 import 'package:diagnostic_app/features/home/controller/pod/carousel_banner_pod.dart';
 import 'package:diagnostic_app/features/home/controller/pod/pathology_test_pod.dart';
 import 'package:diagnostic_app/features/home/controller/pod/routine_test_pod.dart';
+import 'package:diagnostic_app/features/home/controller/pod/view_cart_pod.dart';
 import 'package:diagnostic_app/features/home/view/widget/home_page_carousel_widget.dart';
 import 'package:diagnostic_app/features/terms_and_conditions/controller/pod/about_us_pod.dart';
 import 'package:diagnostic_app/shared/riverpod_ext/asynvalue_easy_when.dart';
@@ -39,20 +40,30 @@ class _HomeViewState extends ConsumerState<HomeView> {
         appBar: AppBar(
           actions: [
             // cart button
-            Badge(
-              label: Text(cartItemsCount.toString()),
-              backgroundColor: AppColors.kErrorColor,
-              child: IconButton(
-                onPressed: () {
-                  // context.navigateTo(const CartRoute());
-                },
-                icon: const Icon(
-                  Icons.shopping_cart,
-                  color: AppColors.kBlackColor,
-                ),
-              ),
+            Consumer(
+              builder: (context, ref, child) {
+                final viewCartAsync = ref.watch(viewCartProvider);
+                return viewCartAsync.easyWhen(data: (viewCartModel) {
+                  return Badge(
+                    label: Text(cartItemsCount.toString()),
+                    backgroundColor: AppColors.kErrorColor,
+                    child: IconButton(
+                      onPressed: () {
+                        context.navigateTo(
+                          CartRoute(
+                            cartItems: viewCartModel.cartData,
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.shopping_cart,
+                        color: AppColors.kBlackColor,
+                      ),
+                    ),
+                  );
+                });
+              },
             ),
-
             //a popup menu button that shows options
             Consumer(
               builder: (context, ref, child) {

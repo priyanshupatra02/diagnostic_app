@@ -23,5 +23,9 @@ class AppRouter extends RootStackRouter {
       page: ContactDetailsRoute.page,
       path: '/contact-details',
     ),
+    AutoRoute(
+      page: CartRoute.page,
+      path: '/cart',
+    ),
   ];
 }
