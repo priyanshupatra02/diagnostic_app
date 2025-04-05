@@ -9,4 +9,5 @@ class AppUrls {
   static const String getCarousel = '/webservice/service.php?action=home_slider';
   static const String getRoutineTest = '/webservice/service.php?action=routine_test';
   static const String getPathoTest = '/webservice/service.php?action=pathology_test';
+  static const String getAboutUs = '/webservice/service.php?action=content&page=about_us';
 }

@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:diagnostic_app/const/app_urls.dart';
 import 'package:diagnostic_app/const/styles/app_colors.dart';
+import 'package:diagnostic_app/core/router/router.gr.dart';
+import 'package:diagnostic_app/features/home/controller/pod/about_us_pod.dart';
 import 'package:diagnostic_app/features/home/controller/pod/carousel_banner_pod.dart';
 import 'package:diagnostic_app/features/home/controller/pod/pathology_test_pod.dart';
 import 'package:diagnostic_app/features/home/controller/pod/routine_test_pod.dart';
@@ -29,6 +31,46 @@ class HomeView extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            // cart button
+            Badge(
+              label: Text('1'),
+              child: IconButton(
+                onPressed: () {
+                  // context.navigateTo(const CartRoute());
+                },
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  color: AppColors.kBlackColor,
+                ),
+              ),
+            ),
+
+            //a popup menu button that shows options
+            Consumer(
+              builder: (context, ref, child) {
+                final aboutUsAsync = ref.watch(aboutUsProvider);
+                return aboutUsAsync.easyWhen(data: (aboutUsModel) {
+                  return PopupMenuButton(
+                    icon: const Icon(
+                      Icons.more_vert,
+                      color: AppColors.kBlackColor,
+                    ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        onTap: () {
+                          context.navigateTo(
+                            TermsAndConditionRoute(contentBody: aboutUsModel.contentData.content),
+                          );
+                        },
+                        child: const Text('About Us'),
+                      ),
+                    ],
+                  );
+                });
+              },
+            ),
+          ],
           title: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

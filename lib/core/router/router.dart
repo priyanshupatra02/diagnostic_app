@@ -15,5 +15,9 @@ class AppRouter extends RootStackRouter {
       path: '/home',
       initial: true,
     ),
+    AutoRoute(
+      page: TermsAndConditionRoute.page,
+      path: '/terms-and-conditions',
+    ),
   ];
 }

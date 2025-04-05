@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:diagnostic_app/const/app_urls.dart';
+import 'package:diagnostic_app/data/model/about_us_model.dart';
 import 'package:diagnostic_app/data/model/carousel_model.dart';
 import 'package:diagnostic_app/data/model/pathology_test_model.dart';
 import 'package:diagnostic_app/data/model/routine_test_model.dart';
@@ -39,6 +40,16 @@ class ApiHelper {
     if (result.statusCode == 200 || result.statusCode == 201) {
       final parsedJson = jsonDecode(result.data);
       return Success(PathologyTestModel.fromMap(parsedJson));
+    } else {
+      return Error(APIException.fromMap(result.data));
+    }
+  }
+  //get about us
+  Future<Result<AboutUsModel, APIException>> getAboutUs() async {
+    final result = await dio.get(AppUrls.getAboutUs);
+    if (result.statusCode == 200 || result.statusCode == 201) {
+      final parsedJson = jsonDecode(result.data);
+      return Success(AboutUsModel.fromMap(parsedJson));
     } else {
       return Error(APIException.fromMap(result.data));
     }
