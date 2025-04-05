@@ -7,6 +7,7 @@ import 'package:diagnostic_app/data/model/contact_details_model.dart';
 import 'package:diagnostic_app/data/model/delete_cart_response_model.dart';
 import 'package:diagnostic_app/data/model/pathology_test_model.dart';
 import 'package:diagnostic_app/data/model/routine_test_model.dart';
+import 'package:diagnostic_app/data/model/update_cart_response_model.dart';
 import 'package:diagnostic_app/data/model/view_cart_model.dart';
 import 'package:diagnostic_app/shared/exception/base_exception.dart';
 import 'package:dio/dio.dart';
@@ -89,6 +90,17 @@ class ApiHelper {
     if (result.statusCode == 200 || result.statusCode == 201) {
       final parsedJson = jsonDecode(result.data);
       return Success(DeleteCartResponseModel.fromMap(parsedJson));
+    } else {
+      return Error(APIException.fromMap(result.data));
+    }
+  }
+
+  //update cart
+  Future<Result<UpdateCartResponseModel, APIException>> updateCart({required int cartId, required int quantity}) async {
+    final result = await dio.get("/webservice/service.php?action=update_item&cart_id=$cartId&user_id=1&quantity=$quantity&isCartAdd=1");
+    if (result.statusCode == 200 || result.statusCode == 201) {
+      final parsedJson = jsonDecode(result.data);
+      return Success(UpdateCartResponseModel.fromMap(parsedJson));
     } else {
       return Error(APIException.fromMap(result.data));
     }
