@@ -10,4 +10,5 @@ class AppUrls {
   static const String getRoutineTest = '/webservice/service.php?action=routine_test';
   static const String getPathoTest = '/webservice/service.php?action=pathology_test';
   static const String getAboutUs = '/webservice/service.php?action=content&page=about_us';
+  static const String getContactDetails = '/webservice/service.php?action=contact_details';
 }

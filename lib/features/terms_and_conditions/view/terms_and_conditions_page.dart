@@ -42,10 +42,10 @@ class _TermAndConditionViewState extends ConsumerState<TermAndConditionView> {
     return Scaffold(
       backgroundColor: AppColors.kWhiteColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "About Us",
         ),
-        centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
