@@ -23,18 +23,25 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomeView extends ConsumerWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
+  int cartItemsCount = 0;
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           actions: [
             // cart button
             Badge(
-              label: Text('1'),
+              label: Text(cartItemsCount.toString()),
+              backgroundColor: AppColors.kErrorColor,
               child: IconButton(
                 onPressed: () {
                   // context.navigateTo(const CartRoute());
@@ -163,6 +170,10 @@ class HomeView extends ConsumerWidget {
                                 leading: Text(
                                   '${routineTestModel.routineTestData[index].testId}.',
                                 ),
+                                trailing: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.add_shopping_cart_sharp),
+                                ),
                               );
                             },
                           ),
@@ -251,6 +262,10 @@ class HomeView extends ConsumerWidget {
                                   width: 50,
                                   height: 50,
                                   fit: BoxFit.cover,
+                                ),
+                                trailing: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.add_shopping_cart_sharp),
                                 ),
                               );
                             },
